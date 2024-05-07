@@ -5,27 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books - Library Management System</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="books.css"> <!-- Your custom CSS file -->
+    <link rel="stylesheet" href="books.css">
     <style>
-        /* Custom CSS to override Bootstrap */
         .custom-card {
             background-color: #e9ecef;
-            /* Grey background color */
         }
     </style>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1
+                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
@@ -44,21 +43,71 @@
 
             <script>
                 function logout() {
-                    // Perform any logout logic here
-                    // For example, you can use JavaScript to redirect to logout.php
                     window.location.href = "logout.php";
                 }
             </script>
 
         </div>
     </header>
-    <!-- Page Content -->
+
     <div class="container mt-5">
         <h2>Add New Book</h2>
-        <form>
+        <?php
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        if (isset($_POST["submit"])) {
+            $name = $_POST["name"];
+            $author = $_POST["author"];
+            $isbn = $_POST["isbn"];
+
+            $errors = array();
+
+            if (empty($name) || empty($author) || empty($isbn)) {
+                array_push($errors, "All fields are required");
+            }
+
+            require_once "database.php";
+
+            $sql = "SELECT * FROM book_info WHERE ISBN = ?";
+            $stmt = mysqli_stmt_init($conn);
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+                mysqli_stmt_bind_param($stmt, "s", $isbn);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $rowCount = mysqli_num_rows($result);
+                if ($rowCount > 0) {
+                    array_push($errors, "ISBN already exists");
+                }
+                mysqli_stmt_close($stmt);
+            }
+
+            if (empty($errors)) {
+                $sql = "INSERT INTO book_info (Author, Name, ISBN) VALUES (?, ?, ?)";
+                $stmt = mysqli_stmt_init($conn);
+                if (mysqli_stmt_prepare($stmt, $sql)) {
+                    mysqli_stmt_bind_param($stmt, "sss", $author, $name, $isbn);
+                    if (mysqli_stmt_execute($stmt)) {
+                        echo "<div class='alert alert-success'>Book added successfully</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Error inserting book</div>";
+                    }
+                    mysqli_stmt_close($stmt);
+                } else {
+                    echo "<div class='alert alert-danger'>Error preparing statement</div>";
+                }
+            } else {
+                foreach ($errors as $error) {
+                    echo "<div class='alert alert-danger'>$error</div>";
+                }
+            }
+        }
+        ?>
+
+        <form action="admin.php" method="post">
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+                <input type="text" class="form-control" id="title" placeholder="Enter title" name="name">
             </div>
             <div class="form-group">
                 <label for="author">Author:</label>
@@ -68,24 +117,16 @@
                 <label for="isbn">ISBN:</label>
                 <input type="text" class="form-control" id="isbn" placeholder="Enter ISBN" name="isbn">
             </div>
-            <button type="submit" class="btn btn-primary">Add Book</button>
+            <button type="submit" class="btn btn-primary" name="submit">Add Book</button>
         </form>
     </div>
 
     <div class="container mt-5">
         <h2>Book List</h2>
         <ul class="list-group">
-            <!-- Example book item -->
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Book Title
-                <span class="badge badge-danger badge-pill">Delete</span>
-            </li>
-            <!-- Add more book items dynamically using PHP or JavaScript -->
+
         </ul>
     </div>
-
-
-
 
     <footer class="bg-dark text-light py-3">
         <div class="container">
@@ -93,7 +134,6 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS (Optional) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
