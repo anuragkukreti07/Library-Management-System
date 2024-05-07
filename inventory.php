@@ -8,13 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="books.css"> <!-- Your custom CSS file -->
-    <style>
-        /* Custom CSS to override Bootstrap */
-        .custom-card {
-            background-color: #e9ecef;
-            /* Grey background color */
-        }
-    </style>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
@@ -39,47 +33,70 @@
             </nav>
         </div>
         <div style="margin-left: auto; margin-top: auto;margin-bottom: auto;margin-right: 5px;">
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" onclick="window.location.href='inventory.php'">
                 Inventory <span class="badge badge-light">4</span>
             </button>
-            <button type="button" id="logout-btn" class="btn btn-light" onclick="logout()">Logout</button>
 
-            <script>
-                function logout() {
-                    // Perform any logout logic here
-                    // For example, you can use JavaScript to redirect to logout.php
-                    window.location.href = "logout.php";
-                }
-            </script>
+            <button type="button" id="logout-btn" class="btn btn-light" href="logout.php">Logout</button>
 
         </div>
     </header>
-    <section class="container">
-        <section class="container">
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Issue a Book</h3>
-                            <p class="card-text">Select and issue books from your collection to users.</p>
-                            <a href="issuebook.php" class="btn btn-primary">Issue Book</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Return a Book</h3>
-                            <p class="card-text">Manage book returns and update your inventory.</p>
-                            <a href="returnbook.php" class="btn btn-secondary">Return Book</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </section>
 
+    <main class="py-5">
+        <div class="container">
+            <h2 class="mb-4">Inventory</h2>
+            <form class="mb-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for books...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <!-- Example book tiles -->
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 custom-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Book Title 1</h5>
+                            <p class="card-text">Author: Author Name 3</p>
+                            <p class="card-text">ISBN: 1357924680</p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <a href="#" class="btn btn-secondary">Return</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 custom-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Book Title 1</h5>
+                            <p class="card-text">Author: Author Name 3</p>
+                            <p class="card-text">ISBN: 1357924680</p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <a href="#" class="btn btn-secondary">Return</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 custom-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Book Title 1</h5>
+                            <p class="card-text">Author: Author Name 3</p>
+                            <p class="card-text">ISBN: 1357924680</p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <a href="#" class="btn btn-secondary">Return</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repeat for each book -->
+            </div>
+        </div>
+    </main>
 
     <footer class="bg-dark text-light py-3">
         <div class="container">

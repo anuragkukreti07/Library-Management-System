@@ -38,10 +38,8 @@
                 </ul>
             </nav>
         </div>
+
         <div style="margin-left: auto; margin-top: auto;margin-bottom: auto;margin-right: 5px;">
-            <button type="button" class="btn btn-primary">
-                Inventory <span class="badge badge-light">4</span>
-            </button>
             <button type="button" id="logout-btn" class="btn btn-light" onclick="logout()">Logout</button>
 
             <script>
@@ -54,31 +52,39 @@
 
         </div>
     </header>
-    <section class="container">
-        <section class="container">
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Issue a Book</h3>
-                            <p class="card-text">Select and issue books from your collection to users.</p>
-                            <a href="issuebook.php" class="btn btn-primary">Issue Book</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Return a Book</h3>
-                            <p class="card-text">Manage book returns and update your inventory.</p>
-                            <a href="returnbook.php" class="btn btn-secondary">Return Book</a>
-                        </div>
-                    </div>
-                </div>
+    <!-- Page Content -->
+    <div class="container mt-5">
+        <h2>Add New Book</h2>
+        <form>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
             </div>
-        </section>
-    </section>
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" class="form-control" id="author" placeholder="Enter author" name="author">
+            </div>
+            <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="text" class="form-control" id="isbn" placeholder="Enter ISBN" name="isbn">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h2>Book List</h2>
+        <ul class="list-group">
+            <!-- Example book item -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Book Title
+                <span class="badge badge-danger badge-pill">Delete</span>
+            </li>
+            <!-- Add more book items dynamically using PHP or JavaScript -->
+        </ul>
+    </div>
+
+
 
 
     <footer class="bg-dark text-light py-3">
