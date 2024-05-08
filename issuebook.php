@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: a.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,11 +43,18 @@
         </div>
         <div style="margin-left: auto; margin-top: auto;margin-bottom: auto;margin-right: 5px;">
             <button type="button" class="btn btn-primary" onclick="window.location.href='inventory.php'">
-                Inventory <span class="badge badge-light">4</span>
+                Inventory <span class="badge badge-light"></span>
             </button>
 
-            <button type="button" id="logout-btn" class="btn btn-light" href="logout.php">Logout</button>
+            <button type="button" id="logout-btn" class="btn btn-light" onclick="logout()">Logout</button>
 
+            <script>
+                function logout() {
+                    // Perform any logout logic here
+                    // For example, you can use JavaScript to redirect to logout.php
+                    window.location.href = "logout.php";
+                }
+            </script>
         </div>
     </header>
 
