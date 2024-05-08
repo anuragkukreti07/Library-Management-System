@@ -14,7 +14,8 @@ if (isset($_SESSION["user"])) {
     <link rel="stylesheet" href="styles1.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
@@ -33,13 +34,15 @@ if (isset($_SESSION["user"])) {
 <body>
     <header>
         <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-        <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+        <h1
+            style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
             Library Management System</h1>
     </header>
 
     <main>
         <div style="display:flex; flex-direction:column; align-items:center;" class="container">
-            <div style=" width:50vh; max-width: 800px;margin: 0 auto;padding: 50px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+            <div
+                style=" width:50vh; max-width: 800px;margin: 0 auto;padding: 50px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
                 <h2>Login</h2>
 
                 <?php
@@ -54,6 +57,7 @@ if (isset($_SESSION["user"])) {
                         if (password_verify($password, $user["password"])) {
                             session_start();
                             $_SESSION["user"] = "yes";
+                            $_SESSION["email"] = $user["email"];
                             header("Location: home.php");
                             die();
                         } else {

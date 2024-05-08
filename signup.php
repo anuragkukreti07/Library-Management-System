@@ -17,18 +17,21 @@ if (isset($_SESSION["user"])) {
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
     <header>
         <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-        <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+        <h1
+            style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
             Library Management System</h1>
     </header>
 
     <main>
-        <div style="max-width: 600px;margin: 0 auto;padding: 50px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+        <div
+            style="max-width: 600px;margin: 0 auto;padding: 50px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
             <h2>Sign Up</h2>
             <div>
                 <?php
@@ -65,7 +68,7 @@ if (isset($_SESSION["user"])) {
                         array_push($errors, "Email already exists!");
                     }
                     if (count($errors) > 0) {
-                        foreach ($errors as  $error) {
+                        foreach ($errors as $error) {
                             echo "<div class='alert alert-danger'>$error</div>";
                         }
                     } else {
@@ -77,6 +80,7 @@ if (isset($_SESSION["user"])) {
                             mysqli_stmt_execute($stmt);
                             echo "<div class='alert alert-success'>You are registered successfully.</div>";
                             header("Location: home.php");
+                            $_SESSION["email"] = $user["email"];
                             exit();
                         } else {
                             die("Something went wrong");

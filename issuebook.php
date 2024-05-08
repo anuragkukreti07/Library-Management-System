@@ -88,7 +88,10 @@ if (!isset($_SESSION['user'])) {
                             echo "<h5 class='card-title'>" . $row['Name'] . "</h5>";
                             echo "<p class='card-text'>Author: " . $row['Author'] . "</p>";
                             echo "<p class='card-text'>ISBN: " . $row['ISBN'] . "</p>";
-                            echo "<a href='#' class='btn btn-primary'>Issue Book</a>";
+                            echo "<form action='issue_book.php' method='POST'>";
+                            echo "<input type='hidden' name='book_id' value='" . $row['id'] . "'>";
+                            echo "<button type='submit' name='issue_book' class='btn btn-primary'>Issue Book</button>";
+                            echo "</form>";
                             echo "</div>";
                             echo "</div>";
                             echo "</div>";
@@ -100,6 +103,7 @@ if (!isset($_SESSION['user'])) {
                     }
                 }
                 ?>
+
             </div>
         </div>
     </main>
