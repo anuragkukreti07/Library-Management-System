@@ -71,15 +71,21 @@ if (!isset($_SESSION['user'])) {
             </form>
             <div class="row">
                 <?php
-                if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['query'])) {
+                session_start();
+                if (!isset($_SESSION['user'])) {
+                    header("Location: a.html");
+                    exit;
+                }
 
-                    require_once "database.php";
+                require_once "database.php";
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+                $sql = "SELECT * FROM book_info";
 
-                    $search_query = $_GET['query'];
+                $result = mysqli_query($conn, $sql);
 
-                    $sql = "SELECT * FROM book_info WHERE Name LIKE '%$search_query%' OR Author LIKE '%$search_query%' OR ISBN LIKE '%$search_query%'";
-                    $result = mysqli_query($conn, $sql);
-
+                if ($result) {
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<div class='col-md-4 mb-4'>";
@@ -95,114 +101,16 @@ if (!isset($_SESSION['user'])) {
                         }
                     } else {
                         echo "<div class='col-md-12'>";
-                        echo "<div class='alert alert-warning'>No books found matching your search query.</div>";
+                        echo "<div class='alert alert-warning'>No books found in the database.</div>";
                         echo "</div>";
                     }
+                } else {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
+
+                mysqli_close($conn);
                 ?>
-            </div>
-            <div class="row">
-                <?php if (!isset($_GET['query'])) { ?>
-                    <!-- Example book tiles -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 4</h5>
-                                <p class="card-text">Author: Author Name 4</p>
-                                <p class="card-text">ISBN: 2468013579</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 5</h5>
-                                <p class="card-text">Author: Author Name 5</p>
-                                <p class="card-text">ISBN: 9876543210</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 6</h5>
-                                <p class="card-text">Author: Author Name 6</p>
-                                <p class="card-text">ISBN: 3698521470</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 7</h5>
-                                <p class="card-text">Author: Author Name 7</p>
-                                <p class="card-text">ISBN: 1597534862</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 8</h5>
-                                <p class="card-text">Author: Author Name 8</p>
-                                <p class="card-text">ISBN: 7539518462</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 9</h5>
-                                <p class="card-text">Author: Author Name 9</p>
-                                <p class="card-text">ISBN: 9517538246</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 1</h5>
-                                <p class="card-text">Author: Author Name 2</p>
-                                <p class="card-text">ISBN: 1234567890</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 2</h5>
-                                <p class="card-text">Author: Author Name 2</p>
-                                <p class="card-text">ISBN: 0987654321</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 custom-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Book Title 3</h5>
-                                <p class="card-text">Author: Author Name 3</p>
-                                <p class="card-text">ISBN: 1357924680</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
             </div>
         </div>
     </main>

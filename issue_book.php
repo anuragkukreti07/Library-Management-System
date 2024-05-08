@@ -25,15 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['issue_book'])) {
                 echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>";
             } else {
                 echo "<div class='alert alert-danger'>Error issuing book.</div>";
-                echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>"; // Add return to home button
+                echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>";
             }
         } else {
             echo "<div class='alert alert-danger'>User not found.</div>";
-            echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>"; // Add return to home button
+            echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>";
         }
     } else {
         echo "<div class='alert alert-danger'>User email not set in session.</div>";
-        echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>"; // Add return to home button
+        echo "<a href='home.php' class='btn btn-primary'>Return to Home</a>";
     }
 }
 ?>
