@@ -20,10 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['book_id'])) {
             $row = mysqli_fetch_assoc($result);
             $user_id = $row['id'];
 
+            // Update user_info table to set book_id to 0 for returned book
             $update_query = "UPDATE user_info SET book_id = 0 WHERE id = $user_id";
             if (mysqli_query($conn, $update_query)) {
-                header("Location: books.php");
-                exit;
+                // Increase the number of copies of the book in book_info table
+                $update_copies_query = "UPDATE book_info SET copies = copies + 1 WHERE id = $book_id";
+                if (mysqli_query($conn, $update_copies_query)) {
+                    header("Location: books.php?returned=true");
+                    exit;
+                } else {
+                    echo "<div class='alert alert-danger'>Error increasing copies.</div>";
+                }
             } else {
                 echo "<div class='alert alert-danger'>Error returning book.</div>";
             }
@@ -34,3 +41,5 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['book_id'])) {
         echo "<div class='alert alert-danger'>User email not set in session.</div>";
     }
 }
+echo "<div class='alert alert-success'>Book returned successfully.</div>";
+?>
