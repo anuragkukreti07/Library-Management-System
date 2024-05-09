@@ -19,16 +19,14 @@ if (!isset($_SESSION['user'])) {
 
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="  font-family:Teachers,sans-serif;font-style: normal;">
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1
-                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
@@ -88,7 +86,31 @@ if (!isset($_SESSION['user'])) {
                             echo "<h5 class='card-title'>" . $row['Name'] . "</h5>";
                             echo "<p class='card-text'>Author: " . $row['Author'] . "</p>";
                             echo "<p class='card-text'>ISBN: " . $row['ISBN'] . "</p>";
-                            echo "<a href='#' class='btn btn-primary'>Issue Book</a>";
+                            // Button to trigger the modal
+                            echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#bookModal" . $row['id'] . "'>View Details</button>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
+
+                            // Modal for each book
+                            echo "<div class='modal fade' id='bookModal" . $row['id'] . "' tabindex='-1' role='dialog' aria-labelledby='bookModalLabel' aria-hidden='true'>";
+                            echo "<div class='modal-dialog' role='document'>";
+                            echo "<div class='modal-content'>";
+                            echo "<div class='modal-header'>";
+                            echo "<h5 class='modal-title' id='bookModalLabel'>" . $row['Name'] . "</h5>";
+                            echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+                            echo "<span aria-hidden='true'>&times;</span>";
+                            echo "</button>";
+                            echo "</div>";
+                            echo "<div class='modal-body'>";
+                            // Fetch and display additional details of the book here
+                            echo "<p>Synopsis: " . $row['Synopsis'] . "</p>";
+                            echo "<p>Date Added: " . $row['DateAdded'] . "</p>";
+                            // Add more details as needed
+                            echo "</div>";
+                            echo "<div class='modal-footer'>";
+                            echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
+                            echo "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</div>";
