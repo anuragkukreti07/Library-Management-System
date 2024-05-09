@@ -34,4 +34,3 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['book_id'])) {
         echo "<div class='alert alert-danger'>User email not set in session.</div>";
     }
 }
-?>

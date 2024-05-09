@@ -17,27 +17,23 @@ if (!isset($_SESSION['user'])) {
     <link rel="stylesheet" href="books.css"> <!-- Your custom CSS file -->
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
+
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1
-                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
                     <li class="list-inline-item"><a class="text-light" href="home.php">Home</a></li>
                     <li class="list-inline-item"><a class="text-light" href="books.php">Books</a></li>
-                    <li class="list-inline-item"><a class="text-light" href="members.php">Members</a></li>
-                    <li class="list-inline-item"><a class="text-light" href="transactions.php">Transactions</a></li>
-                    <li class="list-inline-item"><a class="text-light" href="reports.php">Reports</a></li>
-                    <li class="list-inline-item"><a class="text-light" href="settings.php">Settings</a></li>
                 </ul>
             </nav>
         </div>

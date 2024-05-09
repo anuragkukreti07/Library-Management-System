@@ -11,27 +11,35 @@ if (isset($_SESSION["user"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Library Management System</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles1.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
+
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .alert {
+            color: white;
+            background-color: #dc3545;
+            /* Red background color */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
-<body>
+<body style="font-family: 'Source Code Pro', monospace; font-weight: 400;">
     <header>
-        <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-        <h1
-            style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+        <span style=" font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
+        <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
             Library Management System</h1>
     </header>
-
-    <main>
-        <div
-            style="max-width: 600px;margin: 0 auto;padding: 50px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+    <main style="display:flex;align-items:center;padding-top:100px;">
+        <div style="width:50vh;max-width: 600px;margin: 0 auto;padding: 50px;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
             <h2>Sign Up</h2>
             <div>
                 <?php
@@ -72,7 +80,7 @@ if (isset($_SESSION["user"])) {
                             echo "<div class='alert alert-danger'>$error</div>";
                         }
                     } else {
-                        $sql = "INSERT INTO user_info (full_name, email, password) VALUES (?, ?, ?)";
+                        $sql = "INSERT INTO user_info (full_name, email, password,book_id) VALUES (?, ?, ?,0)";
                         $stmt = mysqli_stmt_init($conn);
                         $prepareStmt = mysqli_stmt_prepare($stmt, $sql);
                         if ($prepareStmt) {
@@ -81,6 +89,8 @@ if (isset($_SESSION["user"])) {
                             echo "<div class='alert alert-success'>You are registered successfully.</div>";
                             header("Location: home.php");
                             $_SESSION["email"] = $user["email"];
+                            $_SESSION["user"] = "yes";
+
                             exit();
                         } else {
                             die("Something went wrong");
@@ -106,20 +116,27 @@ if (isset($_SESSION["user"])) {
                 <div class="form-btn">
                     <input type="submit" class="btn btn-primary" value="Register" name="submit">
                 </div>
+                <div>
+                    <br>
+                    <p style="text-align: center;">Already Registered <a style="text-decoration:underline;" href="login.php">Login Here</a></p>
+                </div>
             </form>
-            <div>
-                <br>
-                <p>Already Registered <a href="login.php">Login Here</a></p>
-            </div>
+
         </div>
         <footer>
             <p>&copy; 2024 Library Management System</p>
         </footer>
     </main>
 
+    <script>
+        function redirectToHomePage() {
+            window.location.href = "home.php";
+        }
+    </script>
 
-
-
+    <footer>
+        <p>&copy; 2024 Library Management System</p>
+    </footer>
 </body>
 
 </html>
