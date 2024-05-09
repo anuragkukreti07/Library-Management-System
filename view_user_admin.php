@@ -8,8 +8,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="books.css">
     <style>
-        .custom-card {
-            background-color: #e9ecef;
+        /* Custom CSS */
+        .user-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .username {
+            width: 90%;
+        }
+
+        .delete-btn-container {
+            margin-left: auto;
         }
     </style>
     <style>
@@ -28,13 +39,13 @@
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
-                    <li class="list-inline-item"><a class="text-light" href="home.php">Home</a></li>
+                    <li class="list-inline-item"><a class="text-light" href="admin.php">Home</a></li>
                     <li class="list-inline-item"><a class="text-light" href="books.php">Books</a></li>
                 </ul>
             </nav>
         </div>
-
         <div style="margin-left: auto; margin-top: auto;margin-bottom: auto;margin-right: 5px;">
+
             <button type="button" id="logout-btn" class="btn btn-light" onclick="logout()">Logout</button>
 
             <script>
@@ -42,33 +53,56 @@
                     window.location.href = "logout.php";
                 }
             </script>
-
         </div>
     </header>
 
-    <section class="container">
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h3 class="card-title">View Books</h3>
-                        <p class="card-text">View and Manage books available in your library.</p>
-                        <a href="view_books_admin.php" class="btn btn-primary">View book</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h3 class="card-title">View Users</h3>
-                        <p class="card-text">View and Manage the users enrolled in your library</p>
-                        <a href="view_user_admin.php" class="btn btn-info">View Users</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="container">
+        <h1 class="mt-4 mb-4">Users List</h1>
+        <ul class="list-group">
+            <?php
+            // Connect to your database
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+            require_once "database.php";
+            $sql = "SELECT id, full_name,email FROM user_info";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                $counter = 1; // Initialize counter
+                echo "<table class='table'>";
+                echo "<thead>
+                        <tr>
+                            <th>Row No.</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                      </thead>";
+                echo "<tbody>";
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $userId = $row['id'];
+                    $username = $row['full_name'];
+                    $email = $row['email']; // Fetch email from the database
+                    echo "<tr>
+                            <td>$counter</td> <!-- Display row number -->
+                            <td>$username</td>
+                            <td>$email</td>
+                            <td>
+                                <button class='btn btn-danger' onclick='deleteUser($userId)'>Delete</button>
+                            </td>
+                          </tr>";
+                    $counter++; // Increment counter
+                }
+                echo "</tbody>";
+                echo "</table>";
+            } else {
+                echo "<li class='list-group-item'>No users found</li>";
+            }
+
+            // Close connection
+            mysqli_close($conn);
+            ?>
+        </ul>
+    </div>
 
     <footer class="bg-dark text-light py-3">
         <div class="container">
@@ -76,6 +110,7 @@
         </div>
     </footer>
 
+    <!-- Bootstrap JS (Optional) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

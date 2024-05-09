@@ -37,7 +37,7 @@ if (!isset($_SESSION['user'])) {
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
-                    <li class="list-inline-item"><a class="text-light" href="home.php">Home</a></li>
+                    <li class="list-inline-item"><a class="text-light" href="admin.php">Home</a></li>
                     <li class="list-inline-item"><a class="text-light" href="books.php">Books</a></li>
                 </ul>
             </nav>
@@ -58,29 +58,27 @@ if (!isset($_SESSION['user'])) {
         </div>
     </header>
     <section class="container">
-        <section class="container">
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Issue a Book</h3>
-                            <p class="card-text">Select and issue books from your collection to users.</p>
-                            <a href="issuebook.php" class="btn btn-primary">Issue Book</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-title">Return a Book</h3>
-                            <p class="card-text">Manage book returns and update your inventory.</p>
-                            <a href="returnbook.php" class="btn btn-info">Return Book</a>
-                        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Issue a Book</h3>
+                        <p class="card-text">Select and issue books from your collection to users.</p>
+                        <a href="issuebook.php" class="btn btn-primary">Issue Book</a>
                     </div>
                 </div>
             </div>
-        </section>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Return a Book</h3>
+                        <p class="card-text">Manage book returns and update your inventory.</p>
+                        <a href="returnbook.php" class="btn btn-info">Return Book</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 

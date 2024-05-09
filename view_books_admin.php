@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header("Location: a.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +5,8 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books - Library Management System</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="books.css"> <!-- Your custom CSS file -->
-
+    <link rel="stylesheet" href="books.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
 
@@ -32,22 +23,17 @@ if (!isset($_SESSION['user'])) {
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
-                    <li class="list-inline-item"><a class="text-light" href="home.php">Home</a></li>
+                    <li class="list-inline-item"><a class="text-light" href="admin.php">Home</a></li>
                     <li class="list-inline-item"><a class="text-light" href="books.php">Books</a></li>
                 </ul>
             </nav>
         </div>
         <div style="margin-left: auto; margin-top: auto;margin-bottom: auto;margin-right: 5px;">
-            <button type="button" class="btn btn-primary" onclick="window.location.href='inventory.php'">
-                Inventory <span class="badge badge-light"></span>
-            </button>
 
             <button type="button" id="logout-btn" class="btn btn-light" onclick="logout()">Logout</button>
 
             <script>
                 function logout() {
-                    // Perform any logout logic here
-                    // For example, you can use JavaScript to redirect to logout.php
                     window.location.href = "logout.php";
                 }
             </script>
@@ -67,15 +53,21 @@ if (!isset($_SESSION['user'])) {
             </form>
             <div class="row">
                 <?php
-                if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['query'])) {
+                // session_start();
+                // if (!isset($_SESSION['user'])) {
+                //     header("Location: a.html");
+                //     exit;
+                // }
 
-                    require_once "database.php";
+                require_once "database.php";
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+                $sql = "SELECT * FROM book_info";
 
-                    $search_query = $_GET['query'];
+                $result = mysqli_query($conn, $sql);
 
-                    $sql = "SELECT * FROM book_info WHERE Name LIKE '%$search_query%' OR Author LIKE '%$search_query%' OR ISBN LIKE '%$search_query%'";
-                    $result = mysqli_query($conn, $sql);
-
+                if ($result) {
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<div class='col-md-4 mb-4'>";
@@ -84,26 +76,30 @@ if (!isset($_SESSION['user'])) {
                             echo "<h5 class='card-title'>" . $row['Name'] . "</h5>";
                             echo "<p class='card-text'>Author: " . $row['Author'] . "</p>";
                             echo "<p class='card-text'>ISBN: " . $row['ISBN'] . "</p>";
-                            echo "<form action='issue_book.php' method='POST'>";
-                            echo "<input type='hidden' name='book_id' value='" . $row['id'] . "'>";
-                            echo "<button type='submit' name='issue_book' class='btn btn-primary'>Issue Book</button>";
-                            echo "</form>";
+                            echo "<a href='#' class='btn btn-danger'>Delete Book</a>";
                             echo "</div>";
                             echo "</div>";
                             echo "</div>";
                         }
                     } else {
                         echo "<div class='col-md-12'>";
-                        echo "<div class='alert alert-warning'>No books found matching your search query.</div>";
+                        echo "<div class='alert alert-warning'>No books found in the database.</div>";
                         echo "</div>";
                     }
+                } else {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
+
+                mysqli_close($conn);
                 ?>
+
+            </div>
+            <div>
+                <a href="addbook.php" class="btn btn-primary">Add a new Book</a>
 
             </div>
         </div>
     </main>
-
 
     <footer class="bg-dark text-light py-3">
         <div class="container">
