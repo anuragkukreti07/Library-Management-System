@@ -12,16 +12,14 @@
 
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="  font-family:Teachers,sans-serif;font-style: normal;">
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1
-                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
@@ -38,6 +36,11 @@
                 function logout() {
                     window.location.href = "logout.php";
                 }
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Backspace') {
+                        logout();
+                    }
+                });
             </script>
         </div>
     </header>
@@ -55,46 +58,44 @@
             </form>
             <div class="row">
                 <<?php
-                if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['query'])) {
+                    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['query'])) {
 
-                    require_once "database.php";
+                        require_once "database.php";
 
-                    $search_query = $_GET['query'];
+                        $search_query = $_GET['query'];
 
-                    $sql = "SELECT * FROM book_info WHERE Name LIKE '%$search_query%' OR Author LIKE '%$search_query%' OR ISBN LIKE '%$search_query%'";
-                    $result = mysqli_query($conn, $sql);
+                        $sql = "SELECT * FROM book_info WHERE Name LIKE '%$search_query%' OR Author LIKE '%$search_query%' OR ISBN LIKE '%$search_query%'";
+                        $result = mysqli_query($conn, $sql);
 
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<div class='col-md-4 mb-4'>";
-                            echo "<div class='card h-100 custom-card'>";
-                            echo "<div class='card-body'>";
-                            echo "<h5 class='card-title'>" . $row['Name'] . "</h5>";
-                            echo "<p class='card-text'>Author: " . $row['Author'] . "</p>";
-                            echo "<p class='card-text'>ISBN: " . $row['ISBN'] . "</p>";
-                            // Form for deleting book
-                            echo "<form action='delete_book.php' method='POST'>";
-                            echo "<input type='hidden' name='book_id' value='" . $row['id'] . "'>";
-                            echo "<button type='submit' name='delete_book' class='btn btn-danger'>Delete Book</button>";
-                            echo "</form>";
-                            echo "</div>";
-                            echo "</div>";
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<div class='col-md-4 mb-4'>";
+                                echo "<div class='card h-100 custom-card'>";
+                                echo "<div class='card-body'>";
+                                echo "<h5 class='card-title'>" . $row['Name'] . "</h5>";
+                                echo "<p class='card-text'>Author: " . $row['Author'] . "</p>";
+                                echo "<p class='card-text'>ISBN: " . $row['ISBN'] . "</p>";
+                                // Form for deleting book
+                                echo "<form action='delete_book.php' method='POST'>";
+                                echo "<input type='hidden' name='book_id' value='" . $row['id'] . "'>";
+                                echo "<button type='submit' name='delete_book' class='btn btn-danger'>Delete Book</button>";
+                                echo "</form>";
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        } else {
+                            echo "<div class='col-md-12'>";
+                            echo "<div class='alert alert-warning'>No books found matching your search query.</div>";
                             echo "</div>";
                         }
-                    } else {
-                        echo "<div class='col-md-12'>";
-                        echo "<div class='alert alert-warning'>No books found matching your search query.</div>";
-                        echo "</div>";
                     }
-                }
-                ?>
+                    ?> </div>
+                    <div>
+                        <a href="addbook.php" class="btn btn-primary">Add a new Book</a>
 
+                    </div>
             </div>
-            <div>
-                <a href="addbook.php" class="btn btn-primary">Add a new Book</a>
-
-            </div>
-        </div>
     </main>
 
     <footer class="bg-dark text-light py-3">

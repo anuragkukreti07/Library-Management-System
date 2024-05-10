@@ -52,6 +52,11 @@
                 function logout() {
                     window.location.href = "logout.php";
                 }
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Backspace') {
+                        logout();
+                    }
+                });
             </script>
         </div>
     </header>
