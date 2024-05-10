@@ -23,7 +23,6 @@ if (isset($_SESSION["user"])) {
         .alert {
             color: white;
             background-color: #dc3545;
-            /* Red background color */
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -67,7 +66,7 @@ if (isset($_SESSION["user"])) {
                 }
                 ?>
 
-                <form action="login.php" method="post">
+                <form action="admin_login.php" method="post">
                     <div class="form-group">
                         <input type="email" placeholder="Enter Email:" name="email" class="form-control">
                     </div>
@@ -79,7 +78,7 @@ if (isset($_SESSION["user"])) {
                     </div>
                     <div>
                         <br>
-                        <p style="text-align: center;">Not registered yet?? <a style="text-decoration:underline; " href=" signup.php">Register Here</a></p>
+                        <p style="text-align: center;">login as user! <a style="text-decoration:underline; " href=" login.php">Register Here</a></p>
                     </div>
 
                 </form>
