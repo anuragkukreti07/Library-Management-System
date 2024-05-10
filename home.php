@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header("Location: a.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,6 +48,13 @@ if (!isset($_SESSION['user'])) {
                 function logout() {
                     window.location.href = "logout.php";
                 }
+
+                // Logout on backspace press
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Backspace') {
+                        logout();
+                    }
+                });
             </script>
 
         </div>
