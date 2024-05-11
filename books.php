@@ -16,17 +16,18 @@ if (!isset($_SESSION['user'])) {
     <link rel="stylesheet" href="books.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
-
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="  font-family:Teachers,sans-serif;font-style: normal;">
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1
+                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
@@ -46,7 +47,7 @@ if (!isset($_SESSION['user'])) {
                 function logout() {
                     window.location.href = "logout.php";
                 }
-                document.addEventListener('keydown', function(event) {
+                document.addEventListener('keydown', function (event) {
                     if (event.key === 'Backspace') {
                         logout();
                     }
@@ -78,7 +79,15 @@ if (!isset($_SESSION['user'])) {
                 if (!$conn) {
                     die("Connection failed: " . mysqli_connect_error());
                 }
-                $sql = "SELECT * FROM book_info";
+
+                if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['query'])) {
+
+                    $search_query = $_GET['query'];
+
+                    $sql = "SELECT * FROM book_info WHERE Name LIKE '%$search_query%' OR Author LIKE '%$search_query%' OR ISBN LIKE '%$search_query%'";
+                } else {
+                    $sql = "SELECT * FROM book_info";
+                }
 
                 $result = mysqli_query($conn, $sql);
 
@@ -109,8 +118,7 @@ if (!isset($_SESSION['user'])) {
                             echo "</div>";
                             echo "<div class='modal-body'>";
                             // Fetch and display additional details of the book here
-                            echo "<p>Synopsis: " . $row['Synopsis'] . "</p>";
-                            echo "<p>Date Added: " . $row['DateAdded'] . "</p>";
+                            echo "<p>No. of Copies left : " . $row['copies'] . "</p>";
                             // Add more details as needed
                             echo "</div>";
                             echo "<div class='modal-footer'>";
