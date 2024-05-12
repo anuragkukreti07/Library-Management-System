@@ -90,7 +90,7 @@ if (isset($_SESSION["admin"])) {
 
                 <form action="admin_login.php" method="post">
                     <div class="form-group">
-                        <input type="email" placeholder="Enter Email:" name="email" class="form-control">
+                        <input type="email" placeholder="Enter Username" name="email" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Enter Password:" name="password" class="form-control">

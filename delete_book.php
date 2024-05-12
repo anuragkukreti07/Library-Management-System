@@ -11,7 +11,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="  font-family:Teachers,sans-serif;font-style: normal;">
@@ -20,7 +21,8 @@
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
             <h1 style=" display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
-            <nav style="font-family: 'Source Code Pro', monospace; font-weight: 400;padding-left: 100px;" class="ml-auto">
+            <nav style="font-family: 'Source Code Pro', monospace; font-weight: 400;padding-left: 100px;"
+                class="ml-auto">
                 <ul class="list-inline text-light">
                     <li class="list-inline-item"><a class="text-light" href="admin.php">Home</a></li>
                     <li class="list-inline-item"><a class="text-light" href="view_books_admin.php">Books</a></li>
@@ -28,8 +30,6 @@
             </nav>
         </div>
         <div style="margin-left: auto; margin-top: auto;margin-bottom: auto;margin-right: 5px;">
-            <button type="button" class="btn btn-primary" onclick="window.location.href='inventory.php'">
-                Inventory <span class="badge badge-light"></span>
             </button>
 
             <button type="button" id="logout-btn" class="btn btn-light" onclick="logout()">Logout</button>

@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['book_id'])) {
             $row = mysqli_fetch_assoc($result);
             $user_id = $row['id'];
 
-            // Update user_info table to set book_id to 0 for returned book
-            $update_query = "UPDATE user_info SET book_id = 0 WHERE id = $user_id";
+            // Update user_info table to set book_id to 0 and issue_date to default for returned book
+            $update_query = "UPDATE user_info SET book_id = 0, issue_date = '0000-00-00' WHERE id = $user_id";
             if (mysqli_query($conn, $update_query)) {
                 // Increase the number of copies of the book in book_info table
                 $update_copies_query = "UPDATE book_info SET copies = copies + 1 WHERE id = $book_id";

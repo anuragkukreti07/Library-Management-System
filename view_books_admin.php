@@ -67,14 +67,10 @@ if (!isset($_SESSION["admin"])) {
             <div class="row">
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['query'])) {
-
                     require_once "database.php";
-
                     $search_query = $_GET['query'];
-
-                    $sql = "SELECT * FROM book_info WHERE Name LIKE '%$search_query%' OR Author LIKE '%$search_query%' OR ISBN LIKE '%$search_query%'";
+                    $sql = "SELECT book_info.*, GROUP_CONCAT(user_info.full_name SEPARATOR ', ') AS issued_by FROM book_info LEFT JOIN user_info ON book_info.id = user_info.book_id WHERE book_info.Name LIKE '%$search_query%' OR book_info.Author LIKE '%$search_query%' OR book_info.ISBN LIKE '%$search_query%' GROUP BY book_info.id";
                     $result = mysqli_query($conn, $sql);
-
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<div class='col-md-4 mb-4'>";
@@ -106,12 +102,7 @@ if (!isset($_SESSION["admin"])) {
                             echo "</button>";
                             echo "</div>";
                             echo "<div class='modal-body'>";
-                            // Fetch the count of users who have issued this book
-                            $book_id = $row['id'];
-                            $user_count_sql = "SELECT COUNT(*) AS user_count FROM user_info WHERE book_id = $book_id";
-                            $user_count_result = mysqli_query($conn, $user_count_sql);
-                            $user_count_row = mysqli_fetch_assoc($user_count_result);
-                            echo "<p>Issued By : " . $user_count_row['user_count'] . " Users" . "</p>";
+                            echo "<p>Issued By : " . $row['issued_by'] . "</p>";
                             echo "</div>";
                             echo "<div class='modal-footer'>";
                             echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>";
@@ -127,6 +118,7 @@ if (!isset($_SESSION["admin"])) {
                     }
                 }
                 ?>
+
             </div>
 
 

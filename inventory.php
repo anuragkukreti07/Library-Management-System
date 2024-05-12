@@ -19,16 +19,19 @@ if (!isset($_SESSION['user'])) {
         @import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="font-family:Teachers,sans-serif;font-style: normal;">
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1
+                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
-            <nav style="font-family: 'Source Code Pro', monospace; font-weight: 400;padding-left: 100px;" class="ml-auto">
+            <nav style="font-family: 'Source Code Pro', monospace; font-weight: 400;padding-left: 100px;"
+                class="ml-auto">
                 <ul class="list-inline text-light">
                     <li class="list-inline-item"><a class="text-light" href="home.php">Home</a></li>
                     <li class="list-inline-item"><a class="text-light" href="books.php">Books</a></li>
@@ -46,7 +49,7 @@ if (!isset($_SESSION['user'])) {
                 function logout() {
                     window.location.href = "logout.php";
                 }
-                document.addEventListener('keydown', function(event) {
+                document.addEventListener('keydown', function (event) {
                     if (event.key === 'Backspace') {
                         logout();
                     }
@@ -70,12 +73,13 @@ if (!isset($_SESSION['user'])) {
                 if ($result && mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     $user_id = $row['id'];
-                    $books_query = "SELECT book_id FROM user_info WHERE id = $user_id";
+                    $books_query = "SELECT book_id, issue_date FROM user_info WHERE id = $user_id";
                     $books_result = mysqli_query($conn, $books_query);
 
                     if ($books_result && mysqli_num_rows($books_result) > 0) {
                         while ($book_row = mysqli_fetch_assoc($books_result)) {
                             $book_id = $book_row['book_id'];
+                            $issue_date = $book_row['issue_date'];
                             if ($book_id != 0) {
                                 $book_info_query = "SELECT * FROM book_info WHERE id = $book_id";
                                 $book_info_result = mysqli_query($conn, $book_info_query);
@@ -105,8 +109,7 @@ if (!isset($_SESSION['user'])) {
                                     echo "</div>";
                                     echo "<div class='modal-body'>";
                                     // Display additional details here
-                                    echo "<p>Synopsis: " . $book_info['Synopsis'] . "</p>";
-                                    echo "<p>Date Added: " . $book_info['DateAdded'] . "</p>";
+                                    echo "<p>Issued On: " . date('F j, Y', strtotime($issue_date)) . "</p>";
                                     // Add more details as needed
                                     echo "</div>";
                                     echo "<div class='modal-footer'>";
