@@ -101,7 +101,6 @@ if (isset($_SESSION["user"])) {
                     </div>
                     <div>
                         <br>
-                        <p style="text-align: center;">Not registered yet?? <a style="text-decoration:underline; " href=" signup.php">Register Here</a></p>
                     </div>
 
                 </form>
