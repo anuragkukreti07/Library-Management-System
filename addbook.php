@@ -1,3 +1,14 @@
+<?php
+// Start the session
+session_start();
+
+// Check if the session variable "admin" is not set
+if (!isset($_SESSION["admin"])) {
+    // Redirect to a.html
+    header("Location: a.html");
+    exit(); // Make sure to exit after redirection
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +40,7 @@
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
                     <li class="list-inline-item"><a class="text-light" href="admin.php">Home</a></li>
-                    <li class="list-inline-item"><a class="text-light" href="books.php">Books</a></li>
+                    <li class="list-inline-item"><a class="text-light" href="view_books_admin.php">Books</a></li>
                 </ul>
             </nav>
         </div>
@@ -41,11 +52,6 @@
                 function logout() {
                     window.location.href = "logout.php";
                 }
-                document.addEventListener('keydown', function(event) {
-                    if (event.key === 'Backspace') {
-                        logout();
-                    }
-                });
             </script>
 
         </div>
