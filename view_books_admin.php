@@ -23,19 +23,21 @@ if (!isset($_SESSION["admin"])) {
 
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
     </style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="  font-family:Teachers,sans-serif;font-style: normal;">
     <header style="display: flex;">
         <div>
             <span style="font-size: 50px;padding:20px" class="material-symbols-outlined">local_library</span>
-            <h1 style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
+            <h1
+                style="font-family: 'Source Code Pro', monospace; font-weight: 400; display: inline-block; vertical-align: middle; padding-bottom:30px">
                 Library Management System</h1>
             <nav style="padding-left: 100px;" class="ml-auto">
                 <ul class="list-inline text-light">
                     <li class="list-inline-item"><a class="text-light" href="admin.php">Home</a></li>
-                    <li class="list-inline-item"><a class="text-light" href="view_books_admin.php">Books</a></li>
+                    <li class="list-inline-item"><a class="text-light" href="view_books_admin.php?query=">Books</a></li>
                 </ul>
             </nav>
         </div>
