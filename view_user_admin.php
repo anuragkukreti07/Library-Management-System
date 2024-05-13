@@ -113,8 +113,7 @@ if (!isset($_SESSION["admin"])) {
                 }
             }
 
-            // Retrieve user information from the database
-            $sql = "SELECT id, full_name, email FROM user_info";
+            $sql = "SELECT id, full_name, email, book_id, issue_date FROM user_info";
             $result = mysqli_query($conn, $sql);
 
             // Check if there are users in the database
@@ -126,6 +125,7 @@ if (!isset($_SESSION["admin"])) {
                 <th>Row No.</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Fine</th>
                 <th>Action</th>
             </tr>
           </thead>";
@@ -133,11 +133,17 @@ if (!isset($_SESSION["admin"])) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     $userId = $row['id'];
                     $username = $row['full_name'];
-                    $email = $row['email']; // Fetch email from the database
+                    $email = $row['email'];
+                    $bookId = $row['book_id'];
+
+                    // Calculate fine
+                    $fine = ($bookId == 0) ? 0 : calculateFine($row['issue_date']); // Set fine to 0 if book_id is 0
+            
                     echo "<tr>
-                <td>$counter</td> <!-- Display row number -->
+                <td>$counter</td>
                 <td>$username</td>
                 <td>$email</td>
+                <td>$fine</td>
                 <td>
                     <form method='post'>
                         <input type='hidden' name='user_id' value='$userId'>
@@ -153,10 +159,23 @@ if (!isset($_SESSION["admin"])) {
                 echo "<li class='list-group-item'>No users found</li>";
             }
 
+            // Function to calculate fine based on issue date
+            function calculateFine($issue_date)
+            {
+                $issue_date_obj = new DateTime($issue_date);
+                $current_date_obj = new DateTime(); // Current date
+                $diff = $current_date_obj->diff($issue_date_obj);
+                $days_issued = $diff->days;
+                $fine = 0;
+                if ($days_issued > 30) {
+                    $fine = ($days_issued - 30) * 20;
+                }
+                return $fine;
+            }
+
             // Close connection
             mysqli_close($conn);
             ?>
-
         </ul>
     </div>
 

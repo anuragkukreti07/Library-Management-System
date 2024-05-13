@@ -73,13 +73,14 @@ if (!isset($_SESSION['user'])) {
                 if ($result && mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     $user_id = $row['id'];
-                    $books_query = "SELECT book_id, issue_date FROM user_info WHERE id = $user_id";
+                    $books_query = "SELECT book_id, issue_date, return_date FROM user_info WHERE id = $user_id";
                     $books_result = mysqli_query($conn, $books_query);
 
                     if ($books_result && mysqli_num_rows($books_result) > 0) {
                         while ($book_row = mysqli_fetch_assoc($books_result)) {
                             $book_id = $book_row['book_id'];
                             $issue_date = $book_row['issue_date'];
+                            $return_date = $book_row['return_date'];
                             if ($book_id != 0) {
                                 $book_info_query = "SELECT * FROM book_info WHERE id = $book_id";
                                 $book_info_result = mysqli_query($conn, $book_info_query);
@@ -97,6 +98,15 @@ if (!isset($_SESSION['user'])) {
                                     echo "</div>";
                                     echo "</div>";
 
+                                    // Calculate the difference between issue date and current date
+                                    $issue_date_obj = new DateTime($issue_date);
+                                    $current_date_obj = new DateTime(); // Current date
+                                    $diff = $current_date_obj->diff($issue_date_obj);
+                                    $days_issued = $diff->days;
+                                    $fine = 0;
+                                    if ($days_issued > 30) {
+                                        $fine = ($days_issued - 30) * 20;
+                                    }
                                     // Modal for each book
                                     echo "<div class='modal fade' id='bookModal" . $book_info['id'] . "' tabindex='-1' role='dialog' aria-labelledby='bookModalLabel' aria-hidden='true'>";
                                     echo "<div class='modal-dialog' role='document'>";
@@ -110,6 +120,8 @@ if (!isset($_SESSION['user'])) {
                                     echo "<div class='modal-body'>";
                                     // Display additional details here
                                     echo "<p>Issued On: " . date('F j, Y', strtotime($issue_date)) . "</p>";
+                                    echo "<p>Return By: " . date('F j, Y', strtotime($return_date)) . "</p>";
+                                    echo "<p>Fine Pending: Rs " . $fine . "</p>";
                                     // Add more details as needed
                                     echo "</div>";
                                     echo "<div class='modal-footer'>";
@@ -131,7 +143,6 @@ if (!isset($_SESSION['user'])) {
                 echo "<div class='alert alert-danger'>User email not set in session.</div>";
             }
             ?>
-
 
         </div>
     </main>

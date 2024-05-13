@@ -85,9 +85,14 @@ if (!isset($_SESSION['user'])) {
                                 $copies_available = $copies_row['copies'];
 
                                 if ($copies_available > 0) {
-                                    // Update the user_info table with the book_id and issue date
+                                    // Calculate issue date
                                     $issue_date = date('Y-m-d'); // Get current date
-                                    $update_sql = "UPDATE user_info SET book_id = $book_id, issue_date = '$issue_date' WHERE id = $user_id";
+            
+                                    // Calculate return date (1 month later)
+                                    $return_date = date('Y-m-d', strtotime('+1 month', strtotime($issue_date)));
+
+                                    // Update the user_info table with the book_id, issue date, and return date
+                                    $update_sql = "UPDATE user_info SET book_id = $book_id, issue_date = '$issue_date', return_date = '$return_date' WHERE id = $user_id";
                                     if (mysqli_query($conn, $update_sql)) {
                                         // Decrease the number of copies of the book in book_info table
                                         $update_copies_sql = "UPDATE book_info SET copies = copies - 1 WHERE id = $book_id";
